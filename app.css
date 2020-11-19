@@ -1,0 +1,25 @@
+body {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  margin: 0;
+  background-image: url("background.jpg");
+  background-color: #262626;
+  text-align: center;
+
+}
+
+.homePage, {
+  margin: 40px;
+  border: 1px solid rgb(122, 111, 122);
+  padding: 20px
+}
+
+.results,  {
+  margin: 40px;
+  border: 1px solid rgb(122, 111, 122);
+  padding: 20px
+}
+
+h1, h2, .question, .score,  {
+  text-align: center;
+}
