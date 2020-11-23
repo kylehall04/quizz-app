@@ -86,18 +86,18 @@ function generateQuestion() {
   let question = store.questions[store.questionNumber];
   let answers = question.answers.map((answer, idx) => {
     if (idx === 0) {
-      return `<input type="radio" id="${answer}" name="answer" value=${answer} required>
-    <label for="${answer}">${answer}</label><br>`;
+      return `<li class='answerStyle'><input type="radio" id="${answer}" name="answer" value=${answer} required>
+    <label for="${answer}">${answer}</label></li>`;
     }
-    return `<input type="radio" id="${answer}" name="answer" value=${answer}>
-    <label for="${answer}">${answer}</label><br>`;
+    return `<li class='answerStyle'><input type="radio" id="${answer}" name="answer" value=${answer}>
+    <label for="${answer}">${answer}</label></li>`;
   });
   return `<div class="questionSection">
     <div class="question">Question ${store.questionNumber + 1}/${store.questions.length}</div>
     <div class="score">Score: ${store.score} correct, ${store.questionNumber - store.score} incorrect</div>
-    <h2>${question.question}</h2>
     <form class="options">
-      ${answers.join('')}
+    <h2>${question.question}</h2>
+      <ul>${answers.join('')}</ul>
       <button id="submitAnswer" class="hideButton">Submit</button>
     </form>
     </div>`;
@@ -118,16 +118,13 @@ function generateBadFeedBack() {
 </div>`;
 }
 
-function generateFeedback(chosen, correct) {
+function generateFeedback(isCorrect) {
   let feedback = ``;
   $('.hideButton').hide();
-  if (chosen === correct) {
+  if (isCorrect) {
     feedback = generateGoodFeedback();
-    store.questionNumber += 1;
-    store.score += 1;
   } else {
     feedback = generateBadFeedBack();
-    store.questionNumber += 1;
   }
   $('main').append(feedback);
 }
@@ -138,29 +135,38 @@ function generateResults() {
       <h2>Final Score: ${store.score}</h2>
       ${store.score} out of ${store.questions.length} questions correct.
       </br><button id="restartQuiz">Restart Quiz</button>
-    </div>`;  
+    </div>`;
 }
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 function handleQuiz() {
-  $('main').on('click', '#startQuiz', function() {
+  $('main').on('click', '#startQuiz', function () {
     store.quizStarted = true;
     render();
   });
 }
 
 function handleSubmit() {
-  $('main').on('submit', '.options', function(event) {
+  $('main').on('submit', '.options', function (event) {
     event.preventDefault();
     let correct = store.questions[store.questionNumber].correctAnswer;
     let chosen = $('input[name="answer"]:checked').attr('id');
-    generateFeedback(chosen, correct);
+    let isCorrect
+    if (chosen === correct) {
+      isCorrect = true;
+      store.questionNumber += 1;
+      store.score += 1;
+    } else {
+      isCorrect = false;
+      store.questionNumber += 1;
+    }
+    generateFeedback(isCorrect);
   });
 }
 
 function handleNext() {
-  $('main').on('click', '#nextQuestion', function(event) {
+  $('main').on('click', '#nextQuestion', function (event) {
     event.preventDefault();
     if (store.questionNumber === store.questions.length) {
       renderResults();
@@ -171,7 +177,7 @@ function handleNext() {
 }
 
 function handleRestart() {
-  $('main').on('click', '#restartQuiz', function(event) {
+  $('main').on('click', '#restartQuiz', function (event) {
     event.preventDefault();
     store.quizStarted = false;
     store.questionNumber = 0;

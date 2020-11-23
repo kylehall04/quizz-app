@@ -8,18 +8,50 @@ body {
 
 }
 
-.homePage, {
+.homePage {
   margin: 40px;
   border: 1px solid rgb(122, 111, 122);
   padding: 20px
 }
 
-.results,  {
+.results  {
   margin: 40px;
   border: 1px solid rgb(122, 111, 122);
   padding: 20px
 }
 
-h1, h2, .question, .score,  {
+h1, h2, .question, .score  {
   text-align: center;
+}
+
+h1 {
+  padding-top: 50px;
+  padding-bottom: 30px;
+}
+
+h2 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#submitAnswer {
+  margin-top: 20px
+}
+
+ul {
+  list-style: none;
+  max-width: 500px;
+  margin: 0 auto;
+  padding-left: 160px
+}
+
+li {
+  padding-top: 10px;
+  text-align: left;
+}
+
+@media (min-width: 500px) {
+  ul {
+    padding-left: 400px;
+  }
 }
